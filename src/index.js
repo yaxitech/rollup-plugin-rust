@@ -11,12 +11,14 @@ const ENTRY_SUFFIX = "?rollup-plugin-rust-entry";
 
 async function get_target_dir(state, dir) {
     let target_dir = state.target_dir_cache[dir];
-
+    debug(`wurzelpfropf: target_dir: ${target_dir}`);
     if (target_dir == null) {
         const cargo_exec = getEnv("CARGO_BIN", "cargo");
         // TODO make this faster somehow ?
         const metadata = await exec(`${cargo_exec} metadata --format-version 1 --no-deps --color never`, { cwd: dir });
         target_dir = state.target_dir_cache[dir] = JSON.parse(metadata).target_directory;
+        debug(`wurzelpfropf2: target_dir: ${target_dir}`);
+        debug(`wurzelpfropf3: ${dir}`)
     }
 
     return target_dir;
